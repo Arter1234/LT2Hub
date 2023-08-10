@@ -14,12 +14,39 @@ Icon = <string> - URL to the image you want displayed on the window.
 CloseCallback = <function> - Function to execute when the window is closed.
 ]]
 
+function DupeAxe()
+	
+	print("Dupe Axe")
+	
+	spawn(function()
+		
+		game.Players.LocalPlayer.Character:PivotTo(CFrame.new(-2058.55, 497.651, 1049.1))
+		game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
+			print("Died")
+			wait(0.3)
+			local LoadEvent = game.ReplicatedStorage.LoadSaveRequests:WaitForChild("RequestLoad")
+			if LoadEvent then
+				local Slot = game.Players.LocalPlayer.CurrentSaveSlot
+				if Slot.Value ~= -1 then
+					print(Slot.Value,"Invoke Server")
+					LoadEvent:InvokeServer(Slot.Value)
+					else
+					print(Slot.Value)
+				end
+				else
+				print("No Request Load :(")
+			end
+			
+		end)
+		
+	end)
+	
+end
 local Speedt = 35
 
 spawn(function()
 	while wait() do
 	game.Players.LocalPlayer.character.Humanoid.WalkSpeed = Speedt
-	print(Speedt)
 	end
 end)
 
@@ -38,7 +65,7 @@ local Dupe = Window:MakeTab({
 Dupe:AddButton({
 	Name = "Dupe Axe",
 	Callback = function()
-      		game.Players.LocalPlayer.Character:PivotTo(CFrame.new(-2058.55, 497.651, 1049.1))
+      		DupeAxe()
       		
   	end    
 })
